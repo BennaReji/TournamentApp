@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import {
+  initializeTeams,
+  generateRoundRobinMatches,
+  calculateStandings,
+  getWinnerClass,
+  getPlayoffWinner,
+} from "./utils/tournamentUtils";
 
 function App() {
   const [numTeams, setNumTeams] = useState(4);
@@ -17,31 +24,12 @@ function App() {
   }, [numTeams]);
 
   const initializeTournament = () => {
-    const newTeams = [];
-    for (let i = 1; i <= numTeams; i++) {
-      newTeams.push({
-        id: i,
-        name: `Team ${i}`,
-        wins: 0,
-        losses: 0,
-        pointsFor: 0,
-        pointsAgainst: 0,
-      });
-    }
+    // ✅ USE utility function instead of inline logic
+    const newTeams = initializeTeams(numTeams);
     setTeams(newTeams);
 
-    // Generate round-robin matches
-    const newMatches = [];
-    for (let i = 0; i < newTeams.length; i++) {
-      for (let j = i + 1; j < newTeams.length; j++) {
-        newMatches.push({
-          team1: i,
-          team2: j,
-          score1: "",
-          score2: "",
-        });
-      }
-    }
+    // ✅ USE utility function instead of inline logic
+    const newMatches = generateRoundRobinMatches(numTeams);
     setMatches(newMatches);
 
     // Reset playoff matches
@@ -78,66 +66,11 @@ function App() {
     }));
   };
 
-  const calculateStandings = () => {
-    const calculatedTeams = teams.map((team) => ({
-      ...team,
-      wins: 0,
-      losses: 0,
-      pointsFor: 0,
-      pointsAgainst: 0,
-    }));
-
-    matches.forEach((match) => {
-      if (match.score1 && match.score2) {
-        const s1 = parseInt(match.score1);
-        const s2 = parseInt(match.score2);
-
-        calculatedTeams[match.team1].pointsFor += s1;
-        calculatedTeams[match.team1].pointsAgainst += s2;
-        calculatedTeams[match.team2].pointsFor += s2;
-        calculatedTeams[match.team2].pointsAgainst += s1;
-
-        if (s1 > s2) {
-          calculatedTeams[match.team1].wins++;
-          calculatedTeams[match.team2].losses++;
-        } else if (s2 > s1) {
-          calculatedTeams[match.team2].wins++;
-          calculatedTeams[match.team1].losses++;
-        }
-      }
-    });
-
-    return calculatedTeams.sort((a, b) => {
-      if (b.wins !== a.wins) return b.wins - a.wins;
-      const diffA = a.pointsFor - a.pointsAgainst;
-      const diffB = b.pointsFor - b.pointsAgainst;
-      return diffB - diffA;
-    });
-  };
-
-  const sortedTeams = calculateStandings();
-
-  const getWinnerClass = (match) => {
-    if (match.score1 && match.score2) {
-      const s1 = parseInt(match.score1);
-      const s2 = parseInt(match.score2);
-      if (s1 > s2) return "winner-1";
-      if (s2 > s1) return "winner-2";
-    }
-    return "";
-  };
-
-  const getPlayoffWinner = (match) => {
-    if (match.score1 && match.score2) {
-      const s1 = parseInt(match.score1);
-      const s2 = parseInt(match.score2);
-      if (s1 > s2) return 1;
-      if (s2 > s1) return 2;
-    }
-    return null;
-  };
+  // ✅ USE utility function instead of inline logic
+  const sortedTeams = calculateStandings(teams, matches);
 
   const getSemifinal1Winner = () => {
+    // ✅ USE utility function
     const winner = getPlayoffWinner(playoffMatches.semifinal1);
     if (winner === 1) return sortedTeams[0]?.name || "TBD";
     if (winner === 2) return sortedTeams[3]?.name || "TBD";
@@ -145,6 +78,7 @@ function App() {
   };
 
   const getSemifinal2Winner = () => {
+    // ✅ USE utility function
     const winner = getPlayoffWinner(playoffMatches.semifinal2);
     if (winner === 1) return sortedTeams[1]?.name || "TBD";
     if (winner === 2) return sortedTeams[2]?.name || "TBD";
@@ -152,6 +86,7 @@ function App() {
   };
 
   const getChampion = () => {
+    // ✅ USE utility function
     const winner = getPlayoffWinner(playoffMatches.championship);
     if (winner === 1) return getSemifinal1Winner();
     if (winner === 2) return getSemifinal2Winner();
@@ -200,8 +135,9 @@ function App() {
         <div className="team-inputs">
           {teams.map((team, index) => (
             <div key={team.id} className="team-input">
-              <label>Team {index + 1}</label>
+              <label htmlFor={`team-${index}`}>Team {index + 1}</label>
               <input
+                id={`team-${index}`}
                 type="text"
                 value={team.name}
                 onChange={(e) => updateTeamName(index, e.target.value)}

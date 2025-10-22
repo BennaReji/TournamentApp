@@ -16,3 +16,35 @@ Note: This will impact Vite dev & build performances.
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+# Run all tests
+
+npm test
+
+# Run only tournamentUtils tests
+
+npm test tournamentUtils
+
+# Run tests in watch mode (auto re-run)
+
+npm test -- --watch
+
+# Run with coverage report
+
+npm run test:coverage
+
+# Run coverage for specific file
+
+npm run test:coverage -- tournamentUtils
+
+# Run with UI (visual test runner)
+
+npm run test:ui
+
+# Run with UI + coverage
+
+npm run test:ui -- --coverage
+
+# View HTML coverage report
+
+open coverage/index.html
