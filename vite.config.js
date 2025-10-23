@@ -9,12 +9,18 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/TournamentApp/', // ← Your GitHub repo name
+  base: '/TournamentApp/',
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.js',
     css: true,
+    pool: 'forks',  // ← Add this line
+    poolOptions: {
+      forks: {
+        singleFork: true,  // ← Add this line
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
