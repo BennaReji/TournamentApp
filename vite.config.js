@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react({
@@ -10,7 +9,7 @@ export default defineConfig({
       },
     }),
   ],
- base: '/tournament-app/', // ← Change this to your repo name
+  base: '/TournamentApp/', // ← Your GitHub repo name
   test: {
     globals: true,
     environment: 'jsdom',
@@ -18,7 +17,7 @@ export default defineConfig({
     css: true,
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'lcov'],
       include: ['src/**/*.{js,jsx}'],
       exclude: [
         'node_modules/',

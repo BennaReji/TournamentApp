@@ -1,6 +1,31 @@
-# React + Vite
+# 🏆 Tournament Score Sheet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Tests](https://github.com/BennaReji/TournamentApp/workflows/CI/CD%20Pipeline/badge.svg)
+![Coverage](https://img.shields.io/codecov/c/github/BennaReji/TournamentApp)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
+A web application for managing sport tournaments with round-robin scoring and playoff brackets.
+
+## 🚀 Live Demo
+
+**Live App:** [https://bennareji.github.io/TournamentApp/](https://bennareji.github.io/TournamentApp/)
+
+## ✨ Features
+
+- ✅ Customizable team names (4, 5, or 6 teams)
+- ✅ Round-robin match generation
+- ✅ Automatic winner highlighting
+- ✅ Live standings table with point differentials
+- ✅ Playoff bracket seeding (1 vs 4, 2 vs 3)
+- ✅ Championship tracking
+- ✅ Responsive design
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React 19 + Vite
+- **Testing:** Vitest + React Testing Library
+- **CI/CD:** GitHub Actions
+- **Deployment:** GitHub Pages
 
 Currently, two official plugins are available:
 
@@ -16,6 +41,22 @@ Note: This will impact Vite dev & build performances.
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## 📦 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/BennaReji/TournamentApp.git
+cd TournamentApp
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+## 🧪 Testing
 
 # Run all tests
 
@@ -45,6 +86,41 @@ npm run test:ui
 
 npm run test:ui -- --coverage
 
-# View HTML coverage report
+### Test Coverage
 
-open coverage/index.html
+- **Unit Tests:** 52 tests for business logic (100% coverage)
+- **Integration Tests:** 18 tests for React components
+- **Total:** 70 tests
+
+## 🏗️ Build
+
+```bash
+# Create production build
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 📊 CI/CD Pipeline
+
+This project uses GitHub Actions for:
+
+- ✅ Automated testing on every push
+- ✅ Code coverage reports
+- ✅ Automatic deployment to GitHub Pages
+- ✅ Build artifact generation
+
+## 🔗 Related Repositories
+
+- **Selenium E2E Tests:** [TournamentAppTest](https://github.com/BennaReji/TournamentAppTest)
+
+## 📝 License
+
+MIT License - feel free to use this project for learning!
+
+## 👤 Author
+
+**Benna Reji**
+
+- GitHub: [@BennaReji](https://github.com/BennaReji)
