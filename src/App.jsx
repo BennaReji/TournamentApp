@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import {
   initializeTeams,
@@ -19,26 +19,23 @@ function App() {
   });
 
   // Initialize tournament when numTeams changes
-  useEffect(() => {
-    initializeTournament();
-  }, [numTeams]);
-
-  const initializeTournament = () => {
-    // ✅ USE utility function instead of inline logic
+  const initializeTournament = useCallback(() => {
     const newTeams = initializeTeams(numTeams);
     setTeams(newTeams);
 
-    // ✅ USE utility function instead of inline logic
     const newMatches = generateRoundRobinMatches(numTeams);
     setMatches(newMatches);
 
-    // Reset playoff matches
     setPlayoffMatches({
       semifinal1: { score1: "", score2: "" },
       semifinal2: { score1: "", score2: "" },
       championship: { score1: "", score2: "" },
     });
-  };
+  }, [numTeams]);
+
+  useEffect(() => {
+    initializeTournament();
+  }, [initializeTournament]);
 
   const updateTeamName = (index, name) => {
     const newTeams = [...teams];
